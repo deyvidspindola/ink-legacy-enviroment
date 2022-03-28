@@ -12,7 +12,9 @@ services:
     ports:
       - "80:80"
     networks:
-      - ink-app-network  
+      - ink-app-network
+    depends_on:
+      - app
 
   app:
     container_name: ink_legacy_app
@@ -27,6 +29,8 @@ services:
       - "host.docker.internal:host-gateway"
     networks:
       - ink-app-network
+    depends_on:
+      - mysql
 
   mysql:
     container_name: ink_legacy_mysql
@@ -43,6 +47,23 @@ services:
     - "3307:3306"
     networks:
       - ink-app-network
+
+  python:
+    container_name: ink_legacy_python
+    build: 
+      context: ./resources/python
+      args:
+        jfrog_user: ${JFROG_USER}
+        jfrog_pass: ${JFROG_PASS}
+    env_file:
+      - .env
+    volumes:
+      - ./backend_service:/myra-ink-backend
+    command: python3 app/ink.py && tail -f ink.log
+    networks:
+      - ink-app-network
+    depends_on:
+      - nginx
 
 networks:
   ink-app-network:

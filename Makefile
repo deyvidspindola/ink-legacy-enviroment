@@ -21,3 +21,7 @@ bash_mysql:
 .PHONY: bash_app
 bash_app:
 	docker exec -ti ink_legacy_app bash
+
+.PHONY: bash_python
+bash_python:
+	docker exec -ti ink_legacy_python bash
