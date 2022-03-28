@@ -9,6 +9,7 @@ services:
       - ./app:/var/www
       - ./resources/config/app.env:/var/www/.env
       - ./resources/config/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    restart: always
     ports:
       - "80:80"
     networks:
@@ -25,6 +26,7 @@ services:
         - ./resources/config/startups/config.sh:/opt/config.sh
         - ./resources/config/app.env:/var/www/.env
     command: bash -c "bash /opt/config.sh && tail -f /dev/null"
+    restart: always
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:
@@ -43,6 +45,7 @@ services:
     volumes:
       - ./db_mysql:/var/lib/mysql
       - ./resources/config/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+    restart: always
     ports:
     - "3307:3306"
     networks:
@@ -60,6 +63,7 @@ services:
     volumes:
       - ./backend_service:/myra-ink-backend
     command: python3 app/ink.py && tail -f ink.log
+    restart: always
     networks:
       - ink-app-network
     depends_on:
