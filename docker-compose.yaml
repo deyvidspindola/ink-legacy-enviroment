@@ -6,7 +6,7 @@ services:
     container_name: ink_legacy_nginx
     image: nginx
     volumes:
-      - ./app:/var/www
+      - ./app/application/web-interface:/var/www
       - ./resources/config/app.env:/var/www/.env
       - ./resources/config/nginx/default.conf:/etc/nginx/conf.d/default.conf
     restart: always
@@ -22,7 +22,7 @@ services:
     build:
       context: ./resources
     volumes:
-        - ./app:/var/www   
+        - ./app/application/web-interface:/var/www   
         - ./resources/config/startups/config.sh:/opt/config.sh
         - ./resources/config/app.env:/var/www/.env
     command: bash -c "bash /opt/config.sh && tail -f /dev/null"
@@ -61,7 +61,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./backend_service:/myra-ink-backend
+      - ./app/application/backend-service:/myra-ink-backend
     command: python3 app/ink.py && tail -f ink.log
     restart: always
     networks:
