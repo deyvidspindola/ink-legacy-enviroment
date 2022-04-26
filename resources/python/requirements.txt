@@ -9,3 +9,5 @@ pyarrow~=5.0.0
 google-cloud-bigquery~=2.26.0
 google-cloud-bigquery-storage~=2.7.0
 ITDevTools~=0.0.7
+sentry-sdk==1.5.8
+dateutil~=2.8.2
